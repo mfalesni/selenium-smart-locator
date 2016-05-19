@@ -38,7 +38,7 @@ This is a basic sample of how does it work. Now come the usage samples of simpli
 
 As you can see, the number of ways how to specify the input parameters offer you a great freedom
 on how do you want to structure your locators. You can store them in YAML and you can use
-:py:class:`Locator` to parse the entries. Or anything else.
+Locator class to parse the entries. Or anything else.
 
 Available selector strategies:
 
