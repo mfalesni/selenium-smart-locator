@@ -5,7 +5,7 @@ from collections import namedtuple
 from selenium.webdriver.common.by import By
 
 __all__ = ['Locator']
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 class Locator(namedtuple('Locator', ['by', 'locator'])):
