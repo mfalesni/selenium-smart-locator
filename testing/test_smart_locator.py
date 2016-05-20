@@ -96,3 +96,19 @@ def test_locator_find_elements():
     locator.find_elements(selenium)
 
     selenium.find_elements.assert_called_once_with(By.XPATH, '//h1')
+
+
+@pytest.mark.parametrize(
+    ('cm', 'strategy'),
+    [
+        ('by_class_name', By.CLASS_NAME),
+        ('by_css', By.CSS_SELECTOR),
+        ('by_id', By.ID),
+        ('by_link_text', By.LINK_TEXT),
+        ('by_name', By.NAME),
+        ('by_partial_link_text', By.PARTIAL_LINK_TEXT),
+        ('by_tag', By.TAG_NAME),
+        ('by_xpath', By.XPATH),
+    ])
+def test_convenience_classmethods(cm, strategy):
+    assert getattr(Locator, cm)('foo') == (strategy, 'foo')

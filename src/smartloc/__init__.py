@@ -40,7 +40,19 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
         Locator(css='#something')   # => Locator(by='css selector', locator='#something')
         Locator(by='xpath', locator='//h1')   # => Locator(by='xpath', locator='//h1')
         # For your comfort, you can pass a dictionary, like it was kwargs
-        Locator({'by': 'xpath', 'locator': '//h1')   # => Locator(by='xpath', locator='//h1')
+        Locator({'by': 'xpath', 'locator': '//h1'})   # => Locator(by='xpath', locator='//h1')
+        # You can also use Locator's classmethods, like this:
+        Locator.by_css('#foo')   # => Locator(by='css selector', locator='#foo')
+        # Always in format Locator.by_<strategy_name>
+
+    When you have locators, you can avoid using ``*`` by using convenience methods:
+
+    .. code-block:: python
+
+        l = Locator('#foo')
+        browser = Firefox()
+        element = l.find_element(browser)
+        elements = l.find_elements(browser)
 
     As you can see, the number of ways how to specify the input parameters offer you a great freedom
     on how do you want to structure your locators. You can store them in YAML and you can use
@@ -69,6 +81,38 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
         'tag': By.TAG_NAME,
         'xpath': By.XPATH,
     }
+
+    @classmethod
+    def by_class_name(cls, locator):
+        return cls(By.CLASS_NAME, locator)
+
+    @classmethod
+    def by_css(cls, locator):
+        return cls(By.CSS_SELECTOR, locator)
+
+    @classmethod
+    def by_id(cls, locator):
+        return cls(By.ID, locator)
+
+    @classmethod
+    def by_link_text(cls, locator):
+        return cls(By.LINK_TEXT, locator)
+
+    @classmethod
+    def by_name(cls, locator):
+        return cls(By.NAME, locator)
+
+    @classmethod
+    def by_partial_link_text(cls, locator):
+        return cls(By.PARTIAL_LINK_TEXT, locator)
+
+    @classmethod
+    def by_tag(cls, locator):
+        return cls(By.TAG_NAME, locator)
+
+    @classmethod
+    def by_xpath(cls, locator):
+        return cls(By.XPATH, locator)
 
     def __new__(cls, *args, **kwargs):
         if len(args) == 1:
