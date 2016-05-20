@@ -1,5 +1,5 @@
 selenium-smart-locator
-================
+======================
 
 |Build Status| |Coverage Status| |Code Health|
 
@@ -34,11 +34,23 @@ This is a basic sample of how does it work. Now come the usage samples of simpli
     Locator(css='#something')   # => Locator(by='css selector', locator='#something')
     Locator(by='xpath', locator='//h1')   # => Locator(by='xpath', locator='//h1')
     # For your comfort, you can pass a dictionary, like it was kwargs
-    Locator({'by': 'xpath', 'locator': '//h1')   # => Locator(by='xpath', locator='//h1')
+    Locator({'by': 'xpath', 'locator': '//h1'})   # => Locator(by='xpath', locator='//h1')
+    # You can also use Locator's classmethods, like this:
+    Locator.by_css('#foo')   # => Locator(by='css selector', locator='#foo')
+    # Always in format Locator.by_<strategy_name>
+
+When you have locators, you can avoid using ``*`` by using convenience methods:
+
+.. code-block:: python
+
+    l = Locator('#foo')
+    browser = Firefox()
+    element = l.find_element(browser)
+    elements = l.find_elements(browser)
 
 As you can see, the number of ways how to specify the input parameters offer you a great freedom
 on how do you want to structure your locators. You can store them in YAML and you can use
-Locator class to parse the entries. Or anything else.
+Locator to parse the entries. Or anything else.
 
 Available selector strategies:
 
