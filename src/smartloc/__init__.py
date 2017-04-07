@@ -139,7 +139,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
         elif len(args) == 2:
             # Mimic an ordinary 2-tuple
             by, locator = args
-            if not By.is_valid(by):
+            if by not in cls.BY_MAPPING:
                 raise ValueError('{0} is not a recognized resolution strategy'.format(by))
         elif len(args) == 0 and kwargs:
             by = None
