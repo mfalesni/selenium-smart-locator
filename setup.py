@@ -17,7 +17,10 @@ setup(
     url="https://github.com/mfalesni/selenium-smart-locator",
     packages=["smartloc"],
     package_dir={'': 'src'},
-    install_requires=['selenium', 'six'],
+    install_requires=[
+        'selenium>1.0.0',
+        'six'
+    ],
     setup_requires=[
         'setuptools_scm',
     ],
