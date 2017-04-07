@@ -5,7 +5,7 @@ from collections import namedtuple
 from selenium.webdriver.common.by import By
 
 __all__ = ['Locator']
-__version__ = '0.1.1'
+__version__ = '0.2.0'
 
 
 class Locator(namedtuple('Locator', ['by', 'locator'])):
@@ -81,6 +81,18 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
         'tag': By.TAG_NAME,
         'xpath': By.XPATH,
     }
+    REVERSE_BY_MAPPING = {v: k for k, v in six.iteritems(BY_MAPPING)}
+
+    @classmethod
+    def _get_by(cls, by):
+        try:
+            if by in cls.REVERSE_BY_MAPPING:
+                by_ = cls.REVERSE_BY_MAPPING[by]
+            else:
+                by_ = by
+            return cls.BY_MAPPING[by_]
+        except KeyError:
+            raise ValueError('{0} is not a recognized resolution strategy'.format(by))
 
     @classmethod
     def by_class_name(cls, locator):
@@ -139,8 +151,6 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
         elif len(args) == 2:
             # Mimic an ordinary 2-tuple
             by, locator = args
-            if by not in cls.BY_MAPPING:
-                raise ValueError('{0} is not a recognized resolution strategy'.format(by))
         elif len(args) == 0 and kwargs:
             by = None
             locator = None
@@ -162,7 +172,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
                 raise ValueError('locator was not specified')
         else:
             raise TypeError('Wrong parameters specified for locator. See Locator class docstring.')
-        return super(Locator, cls).__new__(cls, by, locator)
+        return super(Locator, cls).__new__(cls, cls._get_by(by), locator)
 
     # Convenience methods
     def find_element(self, browser_or_element):
