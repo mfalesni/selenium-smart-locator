@@ -60,8 +60,10 @@ def test_kwargs_no_locator():
 def test_simple_css():
     assert Locator('foo#bar.baz.bat') == (By.CSS_SELECTOR, 'foo#bar.baz.bat')
     assert Locator('#bar.baz.bat') == (By.CSS_SELECTOR, '#bar.baz.bat')
+    assert Locator('#bar-bar.baz.bat') == (By.CSS_SELECTOR, '#bar-bar.baz.bat')
     assert Locator('#bar') == (By.CSS_SELECTOR, '#bar')
     assert Locator('.bat') == (By.CSS_SELECTOR, '.bat')
+    assert Locator('.99-luftballons') == (By.CSS_SELECTOR, '.99-luftballons')
 
 
 def test_implicit_xpath():

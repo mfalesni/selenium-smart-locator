@@ -5,7 +5,7 @@ from collections import namedtuple
 from selenium.webdriver.common.by import By
 
 __all__ = ['Locator']
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 
 class Locator(namedtuple('Locator', ['by', 'locator'])):
@@ -70,7 +70,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
     * xpath
 
     """
-    CLASS_SELECTOR = re.compile(r"^(?:[a-zA-Z][a-zA-Z0-9]*)?(?:[#.][a-zA-Z0-9_-]+)+$")
+    CLASS_SELECTOR = re.compile(r"^(?:[a-zA-Z][a-zA-Z0-9-]*)?(?:[#.][a-zA-Z0-9_-]+)+$")
     BY_MAPPING = {
         'class_name': By.CLASS_NAME,
         'css': By.CSS_SELECTOR,
