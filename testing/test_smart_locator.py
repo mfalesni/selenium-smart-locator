@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 import pytest
-from mock import Mock
+from unittest.mock import Mock
 from selenium.webdriver.common.by import By
 
 from smartloc import Locator
@@ -111,6 +110,7 @@ def test_locator_find_elements():
         ('by_partial_link_text', By.PARTIAL_LINK_TEXT),
         ('by_tag', By.TAG_NAME),
         ('by_xpath', By.XPATH),
-    ])
+    ],
+)
 def test_convenience_classmethods(cm, strategy):
     assert getattr(Locator, cm)('foo') == (strategy, 'foo')
