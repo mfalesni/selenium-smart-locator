@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import Mock
+
+import pytest
 from selenium.webdriver.common.by import By
 
 from smartloc import Locator
