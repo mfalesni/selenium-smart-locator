@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 import re
-import six
 from collections import namedtuple
+
 from selenium.webdriver.common.by import By
 
 __all__ = ['Locator']
@@ -70,6 +69,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
     * xpath
 
     """
+
     CLASS_SELECTOR = re.compile(r"^(?:[a-zA-Z][a-zA-Z0-9-]*)?(?:[#.][a-zA-Z0-9_-]+)+$")
     BY_MAPPING = {
         'class_name': By.CLASS_NAME,
@@ -81,7 +81,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
         'tag': By.TAG_NAME,
         'xpath': By.XPATH,
     }
-    REVERSE_BY_MAPPING = {v: k for k, v in six.iteritems(BY_MAPPING)}
+    REVERSE_BY_MAPPING = {v: k for k, v in BY_MAPPING.items()}
 
     @classmethod
     def _get_by(cls, by):
@@ -92,7 +92,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
                 by_ = by
             return cls.BY_MAPPING[by_]
         except KeyError:
-            raise ValueError('{0} is not a recognized resolution strategy'.format(by))
+            raise ValueError('{} is not a recognized resolution strategy'.format(by))
 
     @classmethod
     def by_class_name(cls, locator):
@@ -134,7 +134,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
             elif isinstance(args[0], dict):
                 # Process dict as kwargs
                 return cls(**args[0])
-            elif isinstance(args[0], six.string_types):
+            elif isinstance(args[0], str):
                 # Determine whether it is a simple css selector or an xpath
                 css = cls.CLASS_SELECTOR.match(args[0])
                 if css is not None:
@@ -147,7 +147,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
                 # __locate__ protocol
                 return cls(args[0].__locator__())
             else:
-                raise TypeError('Cannot parse {0} into a valid locator!'.format(repr(args[0])))
+                raise TypeError('Cannot parse {} into a valid locator!'.format(repr(args[0])))
         elif len(args) == 2:
             # Mimic an ordinary 2-tuple
             by, locator = args
@@ -157,7 +157,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
             for k, v in kwargs.items():
                 if k == 'by':
                     if v not in cls.BY_MAPPING:
-                        raise ValueError('{0} is not a recognized resolution strategy'.format(v))
+                        raise ValueError('{} is not a recognized resolution strategy'.format(v))
                     by = cls.BY_MAPPING[v]
                 elif k == 'locator':
                     locator = v
@@ -165,7 +165,7 @@ class Locator(namedtuple('Locator', ['by', 'locator'])):
                     by = cls.BY_MAPPING[k]
                     locator = v
                 else:
-                    raise ValueError('Unrecognized parameter {0} for Locator'.format(k))
+                    raise ValueError('Unrecognized parameter {} for Locator'.format(k))
             if by is None:
                 raise ValueError('by was not specified')
             if locator is None:
